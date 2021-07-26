@@ -1,0 +1,27 @@
+{
+  "name": "my-cookbook-project",
+  "version": "1.0.0",
+  "description": "recipes app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariusCNicolae/My-Cookbook-Project.git"
+  },
+  "author": "Core4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MariusCNicolae/My-Cookbook-Project/issues"
+  },
+  "homepage": "https://github.com/MariusCNicolae/My-Cookbook-Project#readme",
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "husky": "^7.0.1"
+  }
+}
