@@ -1,2 +1,2 @@
 # My-Cookbook-Project
-Core4 amazing recipes app!
+Core4's amazing recipes app!
