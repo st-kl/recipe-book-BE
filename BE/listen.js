@@ -1,4 +1,4 @@
-const app = require('./db/connection');
+const app = require('./server');
 
 const { PORT = 3000 } = process.env;
 
