@@ -1,5 +1,5 @@
 const path = require('path');
-const { MongoClient } = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -11,9 +11,6 @@ if (!process.env.DBUSER || !process.env.DBPASSWORD) {
   throw new Error('DBUSER or DBPASSWORD not set');
 }
 
-const connectionString = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPASSWORD}@projectcluster.ddwi5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPASSWORD}@projectcluster.ddwi5.mongodb.net`;
 
-MongoClient.connect(connectionString, (err) => {
-  if (err) return console.error(err);
-  console.log('Connected to Database');
-});
+module.exports = new MongoClient(connectionString);
