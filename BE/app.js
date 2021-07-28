@@ -1,12 +1,17 @@
 const cors = require('cors');
 const express = require('express');
-const { getRecipes } = require('./controllers/recipes.controllers');
+const { handleInvalidPath } = require('./errors/app.errors');
+const apiRouter = require('./routes/api.router');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/recipes', getRecipes);
+// ------- Routers -------
+app.use('/api', apiRouter);
+
+// ------- Errors -------
+app.all('/*', handleInvalidPath);
 
 module.exports = app;
