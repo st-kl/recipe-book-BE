@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./",
     "prepare": "husky install",
-    "dev": "nodemon BE/listen.js"
+    "dev": "nodemon BE/listen.js",
+    "gpm": "git push origin mongoDBSetup"
   },
   "repository": {
     "type": "git",
