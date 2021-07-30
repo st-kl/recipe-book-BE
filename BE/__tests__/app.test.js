@@ -4,13 +4,12 @@ const client = require('../db/connection');
 const testData = require('../db/data/test-data/index');
 
 const seed = require('../db/seed/seed');
-const { patch } = require('../routes/recipes.router');
 
 beforeEach(() => seed(testData));
 afterAll(() => client.close());
 
 describe('GET api/recipes', () => {
-  test('status 200 the db responds with an array containing 3 recipe objects', () => {
+  test('200 the db responds with an array containing 3 recipe objects', () => {
     return request(app)
       .get('/api/recipes')
       .expect(200)
@@ -19,7 +18,7 @@ describe('GET api/recipes', () => {
         expect(Array.isArray(body.recipes)).toBe(true);
       });
   });
-  test('status 200 the db responds with an array containing all recipes by a specific user', () => {
+  test('200 the db responds with an array containing all recipes by a specific user', () => {
     return request(app)
       .get('/api/recipes?userId=2')
       .expect(200)
@@ -28,7 +27,7 @@ describe('GET api/recipes', () => {
         expect(Array.isArray(body.recipes)).toBe(true);
       });
   });
-  test('status 200 the db responds with an array containing 2 isPublic recipes', () => {
+  test('200 the db responds with an array containing 2 isPublic recipes', () => {
     return request(app)
       .get('/api/recipes?isPublic=true')
       .expect(200)
@@ -37,7 +36,7 @@ describe('GET api/recipes', () => {
         expect(Array.isArray(body.recipes)).toBe(true);
       });
   });
-  test('status 200 the db responds with an array containing all recipes sorted by the value stated', () => {
+  test('200 the db responds with an array containing all recipes sorted by the value stated', () => {
     return request(app)
       .get('/api/recipes?sortBy=created_at')
       .expect(200)
@@ -47,7 +46,7 @@ describe('GET api/recipes', () => {
         expect(body.recipes).toBeSortedBy('created_at', { descending: true });
       });
   });
-  test('status 200 the db responds with an array sorted in the appropriate order', () => {
+  test('200 the db responds with an array sorted in the appropriate order', () => {
     return request(app)
       .get('/api/recipes?sortBy=created_at&order=asc')
       .expect(200)
@@ -57,7 +56,7 @@ describe('GET api/recipes', () => {
         expect(body.recipes).toBeSortedBy('created_at');
       });
   });
-  test('status 200 the db responds with an array filtered one dietary requirement', () => {
+  test('200 the db responds with an array filtered one dietary requirement', () => {
     return request(app)
       .get('/api/recipes?vegan=true')
       .expect(200)
@@ -66,7 +65,7 @@ describe('GET api/recipes', () => {
         expect(Array.isArray(body.recipes)).toBe(true);
       });
   });
-  test('status 200 the db responds with an array filtered by all dietary requirements', () => {
+  test('200 the db responds with an array filtered by all dietary requirements', () => {
     return request(app)
       .get(
         '/api/recipes?vegan=true&vegetarian=false&dairyFree=true&glutenFree=false'
@@ -75,15 +74,15 @@ describe('GET api/recipes', () => {
       .then(({ body }) => {
         expect(body.recipes.length).toBe(1);
         expect(Array.isArray(body.recipes)).toBe(true);
-        expect(body.recipes[0]._id).toBe(3);
+        expect(body.recipes[0]._id).toBe('3');
       });
   });
 });
 
 describe('POST api/recipes', () => {
-  test('status 201 new recipe details added to db', () => {
+  test('201 new recipe details added to db', () => {
     const newRecipe = {
-      _id: 4,
+      _id: '4',
       title: 'recipe4',
       servings: 8,
       preparationTime: 500,
@@ -92,7 +91,7 @@ describe('POST api/recipes', () => {
       image: 'https://bit.ly/2TFtQQd',
       isPublic: true,
       notes: 'disgusting',
-      userId: 2,
+      userId: '2',
       created_at: new Date(1618964020514),
       equipment: ['knife, fork', 'shovel'],
       ingredients: [
@@ -115,8 +114,8 @@ describe('POST api/recipes', () => {
       .send(newRecipe)
       .expect(201)
       .then(({ body }) => {
-        expect(body.status).toEqual({ acknowledged: true, insertedId: 4 });
-        expect(body.recipeIdArray).toEqual([2, 4]);
+        expect(body.status).toEqual({ acknowledged: true, insertedId: '4' });
+        expect(body.recipeIdArray).toEqual(['2', '4']);
       });
   });
 });
@@ -124,7 +123,7 @@ describe('POST api/recipes', () => {
 describe('PATCH api/recipes/:recipeId', () => {
   test('200: recipe object is updated and returns updated object within an array', () => {
     const patchedRecipe = {
-      _id: 3,
+      _id: '3',
       title: 'recipe3',
       servings: 6,
       preparationTime: 10,
@@ -133,7 +132,7 @@ describe('PATCH api/recipes/:recipeId', () => {
       image: 'https://bit.ly/2TFtQQd',
       isPublic: false,
       notes: 'awesome',
-      userId: 3,
+      userId: '3',
       created_at: new Date(161220020514),
       equipment: ['spoon, plate'],
       ingredients: [
@@ -156,8 +155,41 @@ describe('PATCH api/recipes/:recipeId', () => {
   });
 });
 
-describe.only('DELETE api/recipes/:recipeId', () => {
+describe('DELETE api/recipes/:recipeId', () => {
   test('204: delete recipe', () => {
     return request(app).delete('/api/recipes/1').expect(204);
+  });
+});
+
+describe('GET api/users', () => {
+  test('200: returns ', () => {
+    return request(app)
+      .get('/api/users')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.users.length).toBe(4);
+        expect(Array.isArray(body.users)).toBe(true);
+      });
+  });
+});
+
+describe.only('POST api/users', () => {
+  test('201: new user added to DB', () => {
+    const newUser = {
+      _id: '5',
+      username: 'user5',
+      name: 'name5',
+      avatar_url: 'https://bit.ly/3rD32gb',
+      recipes: [],
+      created_at: new Date(1540965445410),
+    };
+
+    return request(app)
+      .post('/api/users')
+      .send(newUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body).toEqual({ acknowledged: true, insertedId: '5' });
+      });
   });
 });

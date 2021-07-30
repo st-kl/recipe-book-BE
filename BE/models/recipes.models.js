@@ -16,7 +16,7 @@ exports.readRecipes = async (
 
   sortObject[sortBy] = orderLookup[order];
   if (userId) {
-    queryObject.userId = Number(userId);
+    queryObject.userId = userId;
   }
   if (isPublic === 'true') {
     queryObject.isPublic = true;
@@ -72,12 +72,11 @@ exports.createRecipe = async (newRecipe) => {
 };
 
 exports.updateRecipe = async (patchedRecipe, recipeId) => {
-  console.log(patchedRecipe, recipeId);
   await client.connect();
   const result = await client
     .db()
     .collection('recipes')
-    .updateOne({ _id: Number(recipeId) }, { $set: patchedRecipe });
+    .updateOne({ _id: recipeId }, { $set: patchedRecipe });
   await client.close();
   return result;
 };
@@ -87,7 +86,7 @@ exports.deleteRecipe = async (recipeId) => {
   const result = await client
     .db()
     .collection('recipes')
-    .deleteOne({ _id: Number(recipeId) });
+    .deleteOne({ _id: recipeId });
   await client.close();
   return result;
 };

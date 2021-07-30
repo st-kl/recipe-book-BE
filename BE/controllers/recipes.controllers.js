@@ -34,8 +34,8 @@ exports.getRecipes = (req, res, next) => {
 exports.postRecipe = (req, res, next) => {
   const newRecipe = req.body;
   createRecipe(newRecipe)
-    .then((recipes) => {
-      res.status(201).send(recipes);
+    .then((confirmation) => {
+      res.status(201).send(confirmation);
     })
     .catch(next);
 };

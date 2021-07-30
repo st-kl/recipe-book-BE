@@ -1,6 +1,6 @@
 module.exports = [
   {
-    _id: 1,
+    _id: '1',
     title: 'recipe1',
     servings: 4,
     preparationTime: 20,
@@ -9,7 +9,7 @@ module.exports = [
     image: 'https://bit.ly/2TFtQQd',
     isPublic: false,
     notes: 'delicious',
-    userId: 1,
+    userId: '1',
     created_at: new Date(1610964020514),
     equipment: ['spatula, pan, pot'],
     ingredients: [
@@ -23,7 +23,7 @@ module.exports = [
     glutenFree: true,
   },
   {
-    _id: 2,
+    _id: '2',
     title: 'recipe2',
     servings: 5,
     preparationTime: 50,
@@ -32,7 +32,7 @@ module.exports = [
     image: 'https://bit.ly/2TFtQQd',
     isPublic: true,
     notes: 'great',
-    userId: 2,
+    userId: '2',
     created_at: new Date(1612964020514),
     equipment: ['knife, fork'],
     ingredients: [
@@ -47,7 +47,7 @@ module.exports = [
     glutenFree: false,
   },
   {
-    _id: 3,
+    _id: '3',
     title: 'recipe3',
     servings: 6,
     preparationTime: 10,
@@ -56,7 +56,7 @@ module.exports = [
     image: 'https://bit.ly/2TFtQQd',
     isPublic: true,
     notes: 'awesome',
-    userId: 3,
+    userId: '3',
     created_at: new Date(161220020514),
     equipment: ['spoon, plate'],
     ingredients: [
