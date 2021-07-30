@@ -120,3 +120,13 @@ describe('POST api/recipes', () => {
       });
   });
 });
+
+// describe('PATCH api/recipes/:recipeId', () => {
+//   test('status 200 recipe object is updated and returns updated object within an array', () => {
+//     const patchedRecipeElements = {
+//       isPublic: false,
+//       instructions: []
+//     }
+//     return request(app)
+//   });
+// });
