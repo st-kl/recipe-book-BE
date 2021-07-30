@@ -13,3 +13,10 @@ exports.createUser = async (newUser) => {
   await client.close();
   return result;
 };
+
+exports.readUserById = async (userId) => {
+  await client.connect();
+  const result = await client.db().collection('users').findOne();
+  await client.close();
+  return [result];
+};

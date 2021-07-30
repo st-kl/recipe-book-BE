@@ -173,7 +173,7 @@ describe('GET api/users', () => {
   });
 });
 
-describe.only('POST api/users', () => {
+describe('POST api/users', () => {
   test('201: new user added to DB', () => {
     const newUser = {
       _id: '5',
@@ -190,6 +190,19 @@ describe.only('POST api/users', () => {
       .expect(201)
       .then(({ body }) => {
         expect(body).toEqual({ acknowledged: true, insertedId: '5' });
+      });
+  });
+});
+
+describe.only('GET api/users/:userId', () => {
+  test('200: returns ', () => {
+    return request(app)
+      .get('/api/users/1')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.users.length).toBe(1);
+        expect(body.users[0]._id).toBe('1');
+        expect(Array.isArray(body.users)).toBe(true);
       });
   });
 });

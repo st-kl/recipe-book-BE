@@ -1,4 +1,8 @@
-const { readUsers, createUser } = require('../models/users.models');
+const {
+  readUsers,
+  createUser,
+  readUserById,
+} = require('../models/users.models');
 
 exports.getUsers = (req, res, next) => {
   readUsers()
@@ -12,5 +16,12 @@ exports.postUser = (req, res, next) => {
     .then((confirmation) => {
       res.status(201).send(confirmation);
     })
+    .catch(next);
+};
+
+exports.getUserById = (req, res, next) => {
+  const { userId } = req.params;
+  readUserById(userId)
+    .then((users) => res.status(200).send({ users }))
     .catch(next);
 };

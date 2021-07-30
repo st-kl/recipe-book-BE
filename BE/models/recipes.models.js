@@ -83,10 +83,17 @@ exports.updateRecipe = async (patchedRecipe, recipeId) => {
 
 exports.deleteRecipe = async (recipeId) => {
   await client.connect();
+  // get UserId from recipe
+  // const userId = await client
+  //   .db()
+  //   .collection('recipes')
+  //   .findOne({ _id: recipeId }).userId;
+
   const result = await client
     .db()
     .collection('recipes')
     .deleteOne({ _id: recipeId });
+
   await client.close();
   return result;
 };
