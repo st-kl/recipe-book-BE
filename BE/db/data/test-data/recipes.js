@@ -16,10 +16,7 @@ module.exports = [
       { name: 'onion', amount: 1, unit: 'cup' },
       { name: 'cucumber', amount: 1, unit: 'piece' },
     ],
-    instructions: [
-      { step: 1, description: 'do step 1' },
-      { step: 2, description: 'do step 2' },
-    ],
+    instructions: ['do step 1', 'do step 2'],
     vegan: false,
     vegetarian: false,
     dairyFree: false,
@@ -42,10 +39,7 @@ module.exports = [
       { name: 'garlic', amount: 1, unit: 'piece' },
       { name: 'flour', amount: 0.5, unit: 'cups' },
     ],
-    instructions: [
-      { step: 1, description: 'do step 1 again' },
-      { step: 2, description: 'do step 2 again' },
-    ],
+    instructions: ['do step 1 again', 'do step 2 again'],
 
     vegan: true,
     vegetarian: false,
@@ -69,10 +63,7 @@ module.exports = [
       { name: 'pepper', amount: 1, unit: 'piece' },
       { name: 'wine', amount: 1, unit: 'bottle' },
     ],
-    instructions: [
-      { step: 1, description: 'do 1 ' },
-      { step: 2, description: 'do 2 ' },
-    ],
+    instructions: ['do 1 ', 'do 2 '],
 
     vegan: true,
     vegetarian: false,

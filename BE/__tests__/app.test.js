@@ -4,6 +4,7 @@ const client = require('../db/connection');
 const testData = require('../db/data/test-data/index');
 
 const seed = require('../db/seed/seed');
+const { patch } = require('../routes/recipes.router');
 
 beforeEach(() => seed(testData));
 afterAll(() => client.close());
@@ -80,7 +81,7 @@ describe('GET api/recipes', () => {
 });
 
 describe('POST api/recipes', () => {
-  test.only('status 201 new recipe details added to db', () => {
+  test('status 201 new recipe details added to db', () => {
     const newRecipe = {
       _id: 4,
       title: 'recipe4',
@@ -114,19 +115,43 @@ describe('POST api/recipes', () => {
       .send(newRecipe)
       .expect(201)
       .then(({ body }) => {
-        console.log(body, 'BODY<<<<<<');
         expect(body.status).toEqual({ acknowledged: true, insertedId: 4 });
         expect(body.recipeIdArray).toEqual([2, 4]);
       });
   });
 });
 
-// describe('PATCH api/recipes/:recipeId', () => {
-//   test('status 200 recipe object is updated and returns updated object within an array', () => {
-//     const patchedRecipeElements = {
-//       isPublic: false,
-//       instructions: []
-//     }
-//     return request(app)
-//   });
-// });
+describe.only('PATCH api/recipes/:recipeId', () => {
+  test('200: recipe object is updated and returns updated object within an array', () => {
+    const patchedRecipe = {
+      _id: 3,
+      title: 'recipe3',
+      servings: 6,
+      preparationTime: 10,
+      cookingTime: 10,
+      totalTime: 20,
+      image: 'https://bit.ly/2TFtQQd',
+      isPublic: false,
+      notes: 'awesome',
+      userId: 3,
+      created_at: new Date(161220020514),
+      equipment: ['spoon, plate'],
+      ingredients: [
+        { name: 'pepper', amount: 1, unit: 'piece' },
+        { name: 'wine', amount: 1, unit: 'bottle' },
+      ],
+      instructions: ['do 1', 'do 2', 'do 3'],
+      vegan: true,
+      vegetarian: false,
+      dairyFree: true,
+      glutenFree: false,
+    };
+    return request(app)
+      .patch('/api/recipes/3')
+      .send(patchedRecipe)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toBe(true);
+      });
+  });
+});

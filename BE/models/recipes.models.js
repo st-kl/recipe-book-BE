@@ -46,6 +46,7 @@ exports.readRecipes = async (
   await client.close();
   return result;
 };
+
 exports.createRecipe = async (newRecipe) => {
   const result = {};
   //POST NEW RECIPE
@@ -67,5 +68,16 @@ exports.createRecipe = async (newRecipe) => {
   result.recipeIdArray = user.recipes;
   await client.close();
 
+  return result;
+};
+
+exports.updateRecipe = async (patchedRecipe, recipeId) => {
+  console.log(patchedRecipe, recipeId);
+  await client.connect();
+  const result = await client
+    .db()
+    .collection('recipes')
+    .updateOne({ _id: Number(recipeId) }, { $set: patchedRecipe });
+  await client.close();
   return result;
 };
