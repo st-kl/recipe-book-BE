@@ -20,12 +20,10 @@ module.exports = [
       { step: 1, description: 'do step 1' },
       { step: 2, description: 'do step 2' },
     ],
-    dietaryInfo: {
-      vegan: false,
-      vegetarian: false,
-      dairyFree: false,
-      glutenFree: true,
-    },
+    vegan: false,
+    vegetarian: false,
+    dairyFree: false,
+    glutenFree: true,
   },
   {
     _id: 2,
@@ -48,12 +46,11 @@ module.exports = [
       { step: 1, description: 'do step 1 again' },
       { step: 2, description: 'do step 2 again' },
     ],
-    dietaryInfo: {
-      vegan: true,
-      vegetarian: false,
-      dairyFree: false,
-      glutenFree: false,
-    },
+
+    vegan: true,
+    vegetarian: false,
+    dairyFree: false,
+    glutenFree: false,
   },
   {
     _id: 3,
@@ -76,11 +73,10 @@ module.exports = [
       { step: 1, description: 'do 1 ' },
       { step: 2, description: 'do 2 ' },
     ],
-    dietaryInfo: {
-      vegan: true,
-      vegetarian: false,
-      dairyFree: true,
-      glutenFree: false,
-    },
+
+    vegan: true,
+    vegetarian: false,
+    dairyFree: true,
+    glutenFree: false,
   },
 ];

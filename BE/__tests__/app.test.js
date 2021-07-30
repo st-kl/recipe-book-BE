@@ -56,13 +56,25 @@ describe('GET api/recipes', () => {
         expect(body.recipes).toBeSortedBy('created_at');
       });
   });
-  test('status 200 the db responds with an array filtered by dietary requirements', () => {
+  test.only('status 200 the db responds with an array filtered one dietary requirement', () => {
     return request(app)
-      .get('/api/recipes?sortBy=created_at&order=asc')
+      .get('/api/recipes?vegan=true')
       .expect(200)
       .then(({ body }) => {
-        expect(body.recipes.length).toBe(3);
+        expect(body.recipes.length).toBe(2);
         expect(Array.isArray(body.recipes)).toBe(true);
-      }); //incomplete test finish later
+      });
+  });
+  test.only('status 200 the db responds with an array filtered by all dietary requirements', () => {
+    return request(app)
+      .get(
+        '/api/recipes?vegan=true&vegetarian=false&dairyFree=true&glutenFree=false'
+      )
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.recipes.length).toBe(1);
+        expect(Array.isArray(body.recipes)).toBe(true);
+        expect(body.recipes[0]._id).toBe(3);
+      });
   });
 });
