@@ -1,6 +1,6 @@
 const client = require('../db/connection');
 
-exports.selectRecipes = async (
+exports.readRecipes = async (
   userId,
   isPublic,
   sortBy = 'title',
@@ -36,7 +36,6 @@ exports.selectRecipes = async (
   if (dairyFree === 'true') {
     queryObject.dairyFree = true;
   }
-  console.log(queryObject, '<<<---query');
   await client.connect();
   const result = await client
     .db()
@@ -45,5 +44,28 @@ exports.selectRecipes = async (
     .sort(sortObject)
     .toArray();
   await client.close();
+  return result;
+};
+exports.createRecipe = async (newRecipe) => {
+  const result = {};
+  //POST NEW RECIPE
+  await client.connect();
+  result.status = await client.db().collection('recipes').insertOne(newRecipe);
+  //UPDATE USER
+  await client
+    .db()
+    .collection('users')
+    .updateOne(
+      { _id: newRecipe.userId },
+      { $push: { recipes: newRecipe._id } }
+    );
+  //QUERY USER TO CHECK UPDATED ARRAY
+  const user = await client
+    .db()
+    .collection('users')
+    .findOne({ _id: newRecipe.userId });
+  result.recipeIdArray = user.recipes;
+  await client.close();
+
   return result;
 };

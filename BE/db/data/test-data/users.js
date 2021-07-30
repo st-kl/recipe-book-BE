@@ -12,7 +12,7 @@ module.exports = [
     username: 'user2',
     name: 'name2',
     avatar_url: 'https://bit.ly/3rD32gb',
-    recipes: [2, 3],
+    recipes: [2],
     created_at: new Date(1540965445410),
   },
   {
@@ -20,7 +20,7 @@ module.exports = [
     username: 'user3',
     name: 'name3',
     avatar_url: 'https://bit.ly/3rD32gb',
-    recipes: [],
+    recipes: [3],
     created_at: new Date(1656965445410),
   },
   {

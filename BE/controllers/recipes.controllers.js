@@ -1,4 +1,4 @@
-const { selectRecipes } = require('../models/recipes.models');
+const { readRecipes, createRecipe } = require('../models/recipes.models');
 
 exports.getRecipes = (req, res, next) => {
   const {
@@ -11,7 +11,7 @@ exports.getRecipes = (req, res, next) => {
     glutenFree,
     dairyFree,
   } = req.query;
-  selectRecipes(
+  readRecipes(
     userId,
     isPublic,
     sortBy,
@@ -22,5 +22,14 @@ exports.getRecipes = (req, res, next) => {
     dairyFree
   )
     .then((recipes) => res.status(200).send({ recipes }))
+    .catch(next);
+};
+
+exports.postRecipe = (req, res, next) => {
+  const newRecipe = req.body;
+  createRecipe(newRecipe)
+    .then((recipes) => {
+      res.status(201).send(recipes);
+    })
     .catch(next);
 };
