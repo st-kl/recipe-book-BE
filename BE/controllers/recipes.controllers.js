@@ -2,6 +2,7 @@ const {
   readRecipes,
   createRecipe,
   updateRecipe,
+  deleteRecipe,
 } = require('../models/recipes.models');
 
 exports.getRecipes = (req, res, next) => {
@@ -46,5 +47,12 @@ exports.patchRecipe = (req, res, next) => {
     .then((result) => {
       res.status(200).send(result.acknowledged);
     })
+    .catch(next);
+};
+
+exports.removeRecipe = (req, res, next) => {
+  const { recipeId } = req.params;
+  deleteRecipe(recipeId)
+    .then(() => res.status(204).send())
     .catch(next);
 };

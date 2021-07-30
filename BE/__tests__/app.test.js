@@ -121,7 +121,7 @@ describe('POST api/recipes', () => {
   });
 });
 
-describe.only('PATCH api/recipes/:recipeId', () => {
+describe('PATCH api/recipes/:recipeId', () => {
   test('200: recipe object is updated and returns updated object within an array', () => {
     const patchedRecipe = {
       _id: 3,
@@ -153,5 +153,11 @@ describe.only('PATCH api/recipes/:recipeId', () => {
       .then(({ body }) => {
         expect(body).toBe(true);
       });
+  });
+});
+
+describe.only('DELETE api/recipes/:recipeId', () => {
+  test('204: delete recipe', () => {
+    return request(app).delete('/api/recipes/1').expect(204);
   });
 });
