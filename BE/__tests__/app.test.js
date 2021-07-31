@@ -194,7 +194,7 @@ describe('POST api/users', () => {
   });
 });
 
-describe.only('GET api/users/:userId', () => {
+describe('GET api/users/:userId', () => {
   test('200: returns ', () => {
     return request(app)
       .get('/api/users/1')

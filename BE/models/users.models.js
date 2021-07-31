@@ -8,9 +8,18 @@ exports.readUsers = async () => {
 };
 
 exports.createUser = async (newUser) => {
+  let result = {};
   await client.connect();
-  const result = await client.db().collection('users').insertOne(newUser);
-  await client.close();
+  const exists = await client
+    .db()
+    .collection('users')
+    .findOne({ email: newUser.email });
+
+  if (!exists) {
+    result = await client.db().collection('users').insertOne(newUser);
+    await client.close();
+  }
+
   return result;
 };
 
