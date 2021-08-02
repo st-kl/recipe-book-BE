@@ -2,7 +2,8 @@ const {
   readUsers,
   createUser,
   readUserById,
-} = require('../models/users.models');
+  deleteUser,
+} = require("../models/users.models");
 
 exports.getUsers = (req, res, next) => {
   readUsers()
@@ -23,5 +24,12 @@ exports.getUserById = (req, res, next) => {
   const { userId } = req.params;
   readUserById(userId)
     .then((users) => res.status(200).send({ users }))
+    .catch(next);
+};
+
+exports.removeUser = (req, res, next) => {
+  const { userId } = req.params;
+  deleteUser(userId)
+    .then(() => res.status(204).send())
     .catch(next);
 };
