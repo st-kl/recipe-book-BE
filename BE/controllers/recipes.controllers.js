@@ -3,7 +3,7 @@ const {
   createRecipe,
   updateRecipe,
   deleteRecipe,
-} = require('../models/recipes.models');
+} = require("../models/recipes.models");
 
 exports.getRecipes = (req, res, next) => {
   const {
@@ -15,6 +15,7 @@ exports.getRecipes = (req, res, next) => {
     vegetarian,
     glutenFree,
     dairyFree,
+    recipeId,
   } = req.query;
 
   readRecipes(
@@ -25,7 +26,8 @@ exports.getRecipes = (req, res, next) => {
     vegan,
     vegetarian,
     glutenFree,
-    dairyFree
+    dairyFree,
+    recipeId
   )
     .then((recipes) => res.status(200).send({ recipes }))
     .catch(next);

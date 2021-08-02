@@ -77,6 +77,16 @@ describe("GET api/recipes", () => {
         expect(body.recipes[0]._id).toBe("3");
       });
   });
+  test("200 the db responds with an array of queried recipe", () => {
+    return request(app)
+      .get("/api/recipes?recipeId=2")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.recipes.length).toBe(1);
+        expect(Array.isArray(body.recipes)).toBe(true);
+        expect(body.recipes[0]._id).toBe("2");
+      });
+  });
 });
 
 describe("POST api/recipes", () => {
@@ -213,7 +223,7 @@ describe("DELETE api/users/:userId", () => {
   });
 });
 
-describe.only("PATCH api/users/:userId", () => {
+describe("PATCH api/users/:userId", () => {
   test("200: user object is updated and returns updated object within an array", () => {
     const patchedUser = {
       _id: "1",

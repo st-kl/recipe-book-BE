@@ -1,14 +1,15 @@
-const client = require('../db/connection');
+const client = require("../db/connection");
 
 exports.readRecipes = async (
   userId,
   isPublic,
-  sortBy = 'title',
-  order = 'desc',
+  sortBy = "title",
+  order = "desc",
   vegan,
   vegetarian,
   glutenFree,
-  dairyFree
+  dairyFree,
+  recipeId
 ) => {
   const queryObject = {};
   const sortObject = {};
@@ -18,28 +19,31 @@ exports.readRecipes = async (
   if (userId) {
     queryObject.userId = userId;
   }
-  if (isPublic === 'true') {
+  if (isPublic === "true") {
     queryObject.isPublic = true;
   }
-  if (isPublic === 'false') {
+  if (isPublic === "false") {
     queryObject.isPublic = false;
   }
-  if (vegan === 'true') {
+  if (vegan === "true") {
     queryObject.vegan = true;
   }
-  if (vegetarian === 'true') {
+  if (vegetarian === "true") {
     queryObject.vegetarian = true;
   }
-  if (glutenFree === 'true') {
+  if (glutenFree === "true") {
     queryObject.glutenFree = true;
   }
-  if (dairyFree === 'true') {
+  if (dairyFree === "true") {
     queryObject.dairyFree = true;
+  }
+  if (recipeId) {
+    queryObject._id = recipeId;
   }
   await client.connect();
   const result = await client
     .db()
-    .collection('recipes')
+    .collection("recipes")
     .find(queryObject)
     .sort(sortObject)
     .toArray();
@@ -51,11 +55,11 @@ exports.createRecipe = async (newRecipe) => {
   const result = {};
   //POST NEW RECIPE
   await client.connect();
-  result.status = await client.db().collection('recipes').insertOne(newRecipe);
+  result.status = await client.db().collection("recipes").insertOne(newRecipe);
   //UPDATE USER
   await client
     .db()
-    .collection('users')
+    .collection("users")
     .updateOne(
       { _id: newRecipe.userId },
       { $push: { recipes: newRecipe._id } }
@@ -63,7 +67,7 @@ exports.createRecipe = async (newRecipe) => {
   //QUERY USER TO CHECK UPDATED ARRAY
   const user = await client
     .db()
-    .collection('users')
+    .collection("users")
     .findOne({ _id: newRecipe.userId });
   result.recipeIdArray = user.recipes;
   await client.close();
@@ -75,23 +79,30 @@ exports.updateRecipe = async (patchedRecipe, recipeId) => {
   await client.connect();
   const result = await client
     .db()
-    .collection('recipes')
+    .collection("recipes")
     .updateOne({ _id: recipeId }, { $set: patchedRecipe });
   await client.close();
   return result;
 };
 
 exports.deleteRecipe = async (recipeId) => {
+  let userId;
+  //query user to extract user id
   await client.connect();
-  // get UserId from recipe
-  // const userId = await client
-  //   .db()
-  //   .collection('recipes')
-  //   .findOne({ _id: recipeId }).userId;
-
+  const user = await client
+    .db()
+    .collection("recipes")
+    .findOne({ _id: recipeId });
+  userId = user.userId;
+  //remove recipe id from user document
+  await client
+    .db()
+    .collection("users")
+    .updateOne({ _id: userId }, { $pull: { recipes: recipeId } });
+  //delete recipe
   const result = await client
     .db()
-    .collection('recipes')
+    .collection("recipes")
     .deleteOne({ _id: recipeId });
 
   await client.close();
