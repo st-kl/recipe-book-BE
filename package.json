@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon BE/listen.js",
-    "gpm": "git push origin mongoDBSetup"
+    "start": "node listen.js"
   },
   "repository": {
     "type": "git",
