@@ -207,8 +207,28 @@ describe("GET api/users/:userId", () => {
   });
 });
 
-describe.only("DELETE api/users/:userId", () => {
+describe("DELETE api/users/:userId", () => {
   test("204: delete user", () => {
     return request(app).delete("/api/users/2").expect(204);
+  });
+});
+
+describe.only("PATCH api/users/:userId", () => {
+  test("200: user object is updated and returns updated object within an array", () => {
+    const patchedUser = {
+      _id: "1",
+      username: "user1",
+      name: "nameA",
+      avatar_url: "https://bit.ly/3rD32gb",
+      recipes: ["1"],
+      created_at: new Date(1610965445410),
+    };
+    return request(app)
+      .patch("/api/users/1")
+      .send(patchedUser)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toBe(true);
+      });
   });
 });

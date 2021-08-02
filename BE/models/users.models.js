@@ -41,3 +41,13 @@ exports.deleteUser = async (userId) => {
   await client.close();
   return result;
 };
+
+exports.updateUser = async (patchedUser, userId) => {
+  await client.connect();
+  const result = await client
+    .db()
+    .collection("users")
+    .updateOne({ _id: userId }, { $set: patchedUser });
+  await client.close();
+  return result;
+};
