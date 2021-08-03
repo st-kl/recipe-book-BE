@@ -38,13 +38,14 @@ exports.readRecipes = async (
   if (dairyFree === 'true') {
     queryObject.dairyFree = true;
   }
-  if (recipeId.length != 1) {
-    queryObject._id = new ObjectId(recipeId);
+  if (recipeId) {
+    if (recipeId.length != 1) {
+      queryObject._id = new ObjectId(recipeId);
+    }
+    if (recipeId.length === 1) {
+      queryObject._id = recipeId;
+    }
   }
-  if (recipeId.length === 1) {
-    queryObject._id = recipeId;
-  }
-  console.log(recipeId);
   await client.connect();
   const result = await client
     .db()
