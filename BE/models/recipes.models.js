@@ -82,6 +82,10 @@ exports.createRecipe = async (newRecipe) => {
 };
 
 exports.updateRecipe = async (patchedRecipe, recipeId) => {
+  if (recipeId.length != 1) {
+    recipeId = new ObjectId(recipeId);
+  }
+
   await client.connect();
   const result = await client
     .db()
