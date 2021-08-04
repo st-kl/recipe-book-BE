@@ -51,7 +51,7 @@ exports.updateUser = async (patchedUser, userId) => {
   const result = await client
     .db()
     .collection('users')
-    .updateOne({ _id: userId }, { $set: patchedUser });
+    .updateOne({ _id: ObjectId(userId) }, { $set: patchedUser });
   await client.close();
   return result;
 };
