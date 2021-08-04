@@ -1,8 +1,9 @@
-const client = require("../db/connection");
+const client = require('../db/connection');
+const { ObjectId } = require('mongodb');
 
 exports.readUsers = async () => {
   await client.connect();
-  const result = await client.db().collection("users").find().toArray();
+  const result = await client.db().collection('users').find().toArray();
   await client.close();
   return result;
 };
@@ -12,20 +13,23 @@ exports.createUser = async (newUser) => {
   await client.connect();
   const exists = await client
     .db()
-    .collection("users")
+    .collection('users')
     .findOne({ email: newUser.email });
 
   if (!exists) {
-    result = await client.db().collection("users").insertOne(newUser);
+    result = await client.db().collection('users').insertOne(newUser);
     await client.close();
   }
-
+  console.log(result);
   return result;
 };
 
 exports.readUserById = async (userId) => {
   await client.connect();
-  const result = await client.db().collection("users").findOne({ _id: userId });
+  const result = await client
+    .db()
+    .collection('users')
+    .findOne({ _id: ObjectId(userId) });
   await client.close();
   return [result];
 };
@@ -35,7 +39,7 @@ exports.deleteUser = async (userId) => {
 
   const result = await client
     .db()
-    .collection("users")
+    .collection('users')
     .deleteOne({ _id: userId });
 
   await client.close();
@@ -46,7 +50,7 @@ exports.updateUser = async (patchedUser, userId) => {
   await client.connect();
   const result = await client
     .db()
-    .collection("users")
+    .collection('users')
     .updateOne({ _id: userId }, { $set: patchedUser });
   await client.close();
   return result;

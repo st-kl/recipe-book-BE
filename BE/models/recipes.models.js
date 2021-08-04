@@ -42,9 +42,6 @@ exports.readRecipes = async (
     if (recipeId.length != 1) {
       queryObject._id = new ObjectId(recipeId);
     }
-    if (recipeId.length === 1) {
-      queryObject._id = recipeId;
-    }
   }
   await client.connect();
   const result = await client
@@ -67,14 +64,14 @@ exports.createRecipe = async (newRecipe) => {
     .db()
     .collection('users')
     .updateOne(
-      { _id: newRecipe.userId },
+      { _id: ObjectId(newRecipe.userId) },
       { $push: { recipes: newRecipe._id } }
     );
   //QUERY USER TO CHECK UPDATED ARRAY
   const user = await client
     .db()
     .collection('users')
-    .findOne({ _id: newRecipe.userId });
+    .findOne({ _id: ObjectId(newRecipe.userId) });
   result.recipeIdArray = user.recipes;
   await client.close();
 
@@ -86,7 +83,7 @@ exports.updateRecipe = async (patchedRecipe, recipeId) => {
   const result = await client
     .db()
     .collection('recipes')
-    .updateOne({ _id: recipeId }, { $set: patchedRecipe });
+    .updateOne({ _id: ObjectId(recipeId) }, { $set: patchedRecipe });
   await client.close();
   return result;
 };
@@ -98,18 +95,18 @@ exports.deleteRecipe = async (recipeId) => {
   const user = await client
     .db()
     .collection('recipes')
-    .findOne({ _id: recipeId });
+    .findOne({ _id: ObjectId(recipeId) });
   userId = user.userId;
   //remove recipe id from user document
   await client
     .db()
     .collection('users')
-    .updateOne({ _id: userId }, { $pull: { recipes: recipeId } });
+    .updateOne({ _id: ObjectId(userId) }, { $pull: { recipes: recipeId } });
   //delete recipe
   const result = await client
     .db()
     .collection('recipes')
-    .deleteOne({ _id: recipeId });
+    .deleteOne({ _id: ObjectId(recipeId) });
 
   await client.close();
   return result;
