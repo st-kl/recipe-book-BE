@@ -40,7 +40,7 @@ exports.deleteUser = async (userId) => {
   const result = await client
     .db()
     .collection('users')
-    .deleteOne({ _id: userId });
+    .deleteOne({ _id: ObjectId(userId) });
 
   await client.close();
   return result;
