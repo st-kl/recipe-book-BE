@@ -3,9 +3,8 @@ const app = require('../app');
 const client = require('../db/connection');
 const testData = require('../db/data/test-data/index');
 const { ObjectId } = require('mongodb');
-
 const seed = require('../db/seed/seed');
-jest.setTimeout(100000);
+
 beforeEach(() => seed(testData));
 afterAll(() => client.close());
 

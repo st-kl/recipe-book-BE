@@ -1,37 +1,38 @@
 {
-  "name": "my-cookbook-project",
+  "name": "recipe-book-BE",
   "version": "1.0.0",
   "description": "recipes app",
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon BE/listen.js",
-    "start": "node BE/listen.js"
+    "dev": "nodemon listen.js",
+    "start": "node listen.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MariusCNicolae/My-Cookbook-Project.git"
+    "url": "git+https://github.com/two-wheels01/recipe-book-BE.git"
   },
-  "author": "Core4",
+  "author": "SK",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MariusCNicolae/My-Cookbook-Project/issues"
+    "url": "https://github.com/two-wheels01/recipe-book-BE.git"
   },
-  "homepage": "https://github.com/MariusCNicolae/My-Cookbook-Project#readme",
+  "homepage": "https://github.com/two-wheels01/recipe-book-BE.git#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jest": "^27.0.6",
-    "jest-sorted": "^1.0.12",
-    "mongodb": "^4.0.1",
-    "mongoose": "^5.13.3",
-    "nodemon": "^2.0.12",
-    "supertest": "^6.1.4"
+    "mongodb": "^4.0.1"
   },
   "jest": {
     "setupFilesAfterEnv": [
       "jest-sorted"
     ]
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "jest-sorted": "^1.0.12",
+    "nodemon": "^2.0.12",
+    "supertest": "^6.1.5"
   }
 }

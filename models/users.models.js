@@ -20,7 +20,6 @@ exports.createUser = async (newUser) => {
     result = await client.db().collection('users').insertOne(newUser);
     await client.close();
   }
-  console.log(result);
   return result;
 };
 

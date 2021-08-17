@@ -4,7 +4,7 @@ const { MongoClient } = require('mongodb');
 const ENV = process.env.NODE_ENV || 'development';
 
 require('dotenv').config({
-  path: path.resolve(__dirname, `../../.env.${ENV}`),
+  path: path.resolve(__dirname, `../.env.${ENV}`),
 });
 
 if (!process.env.DBUSER || !process.env.DBPASSWORD || !process.env.DBNAME) {
