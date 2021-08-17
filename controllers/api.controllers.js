@@ -133,10 +133,10 @@ apiInfo = {
       recipes: [],
       created_at: new Date(1540965445410),
     },
-  },
-  exampleResponse: {
-    acknowledged: true,
-    insertedId: '810a5e30ceac105ae4bc5bce',
+    exampleResponse: {
+      acknowledged: true,
+      insertedId: '810a5e30ceac105ae4bc5bce',
+    },
   },
   'PATCH /api/users/:user_id': {
     description: 'serves an object with a response when patch was successful',
